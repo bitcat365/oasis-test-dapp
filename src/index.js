@@ -12,12 +12,10 @@ const initializeOasis = async () => {
       alert("请先安装oasis-extension-wallet")
     } else {
       onboardButton.innerText = 'Onboarding in progress'
-      window.oasis.requestAccounts().then((accounts) => {
-        console.log('dapp=accounts', accounts)
-        if (accounts && accounts.address) {
-          account = accounts
-          address = accounts.address;
-          document.getElementById('accounts').innerHTML = address;
+      window.oasis.requestAccounts().then((approveAccount) => {
+        if (Array.isArray(approveAccount) && approveAccount.length > 0) {
+          account = approveAccount
+          document.getElementById('accounts').innerHTML = approveAccount;
           onboardButton.innerText = 'Connected'
           onboardButton.disabled = true
         } else {
@@ -33,8 +31,8 @@ const initializeOasis = async () => {
   getAccountsButton.onclick = async () => {
     if (window.oasis) {
       account = await window.oasis.getAccounts();
-      if (account.address) {
-        getAccountsResults.innerHTML = account.address || 'Not able to get accounts'
+      if (Array.isArray(account) && account.length > 0) {
+        getAccountsResults.innerHTML = account || 'Not able to get accounts'
       }
     }
   }
@@ -49,9 +47,10 @@ const initializeOasis = async () => {
    * send transfer
    */
   sendButton.onclick = async () => {
+    let from = account && account.length > 0 ? account[0] : ""
     let signResult = await window.oasis.signTransaction({
       amount: sendAmountInput.value,
-      from: account && account.address || "",
+      from: from,
       to: receiveAddressInput.value,
     })
     sendResultDisplay.innerHTML = signResult.error || signResult.hash
@@ -82,16 +81,38 @@ const initializeOasis = async () => {
   async function getAccount() {
     if (window.oasis) {
       account = await window.oasis.getAccounts()
-      if (account && account.address) {
+      if (Array.isArray(account) && account.length > 0) {
         onboardButton.innerText = 'Connected'
         onboardButton.disabled = true
-        document.getElementById('accounts').innerHTML = account.address || "";
+        document.getElementById('accounts').innerHTML = account[0] || "";
       }
     }
   }
   setTimeout(() => {
     getAccount()
+    if (window.oasis) {
+      window.oasis.onAccountChange('accountsChanged', handleNewAccounts);
+    }
   }, 200);
 
+  function handleNewAccounts(newAccounts) {
+    if (Array.isArray(newAccounts)) {
+      document.getElementById('accounts').innerHTML = newAccounts;
+      if(newAccounts.length===0){
+        onboardButton.innerText = 'Connect'
+        onboardButton.disabled = false
+      }
+    }
+  }
+
+
+  function handleNewChain(chainId) {
+    // chainIdDiv.innerHTML = chainId;
+  }
+  function handleNewNetwork(networkId) {
+    // networkDiv.innerHTML = networkId;
+  }
+  // window.oasis.on('chainChanged', handleNewChain);//处理 更改链
+  // window.oasis.on('networkChanged', handleNewNetwork);//处理 网络更改
 }
 window.addEventListener('DOMContentLoaded', initializeOasis)
