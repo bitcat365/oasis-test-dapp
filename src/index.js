@@ -66,9 +66,10 @@ const initializeOasis = async () => {
   const addEscrowResultDisplay = document.getElementById('addEscrowResultDisplay')
 
   addEscrowButton.onclick = async () => {
+    let from = account && account.length > 0 ? account[0] : ""
     let signResult = await window.oasis.signAddEscrow({
       amount: addEscrowAmountInput.value,
-      from: account.address,
+      from: from,
       to: vaildatorAddressInput.value,
     })
     addEscrowResultDisplay.innerHTML = signResult.error || signResult.hash
