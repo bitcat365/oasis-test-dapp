@@ -42,6 +42,20 @@
             Accounts: <span id="accounts"></span>
           </p>
         </div>
+
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+          <p class="info-text alert alert-primary">
+            Balance: <span id="balance">0</span>
+          </p>
+        </div>
+
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+          <p class="info-text alert alert-secondary">
+            Nonce: <span id="nonce">null</span>
+          </p>
+        </div>
+
+
       </div>
     </section>
 
@@ -88,11 +102,11 @@
                 <hr />
                 <input class="form-control" type="text" placeholder="Set Nonce (Option)" id="sendNonceInput" />
 
-                <hr />
+                <!-- <hr />
                 <input class="form-control" type="text" placeholder="Set FeeGas (Option)" id="sendFeeGasInput" />
 
                 <hr />
-                <input class="form-control" type="text" placeholder="Set FeeAmount (Option)" id="sendFeeAmountInput" />
+                <input class="form-control" type="text" placeholder="Set FeeAmount (Option)" id="sendFeeAmountInput" /> -->
 
                
                 <hr />
@@ -124,13 +138,6 @@
                   <hr />
                   <input class="form-control" type="text" placeholder="Set Nonce (Option)" id="stakeNonceInput" />
   
-                  <hr />
-                  <input class="form-control" type="text" placeholder="Set FeeGas (Option)" id="stakeFeeGasInput" />
-  
-                  <hr />
-                  <input class="form-control" type="text" placeholder="Set FeeAmount (Option)" id="stakeFeeAmountInput" />
-
-
                 <hr />
                 <button class="btn btn-primary btn-lg btn-block mb-3" id="addEscrowButton">
                   addEscrow
