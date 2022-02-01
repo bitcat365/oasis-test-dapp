@@ -81,6 +81,7 @@ const nonceDiv = document.getElementById('nonce')
 
 
 /** connect and get account */
+ const extensionIdInput = document.getElementById('extensionIdInput')
  const onboardButton = document.getElementById('connectButton')
  const getAccountsButton = document.getElementById('getAccounts')
  const accountsResults = document.getElementById('getAccountsResult')
@@ -139,21 +140,19 @@ const playground = (async function () {
   // 获取签名者
   // 打包交易
   // 4，签名
-  let extensionId = "fdkfkdobkkgngljecckfaeiabkinnnij"
-  // "aeiciliacehpifhikhkgkmohihocgain"//"fdkfkdobkkgngljecckfaeiabkinnnij"
-
-  const extension_url = "chrome-extension://" + extensionId
-
-  // blgopabeahlgefobchbgbkekajmbnfmh   ext
-  // fdkfkdobkkgngljecckfaeiabkinnnij     my ext
 
 
   onboardButton.onclick = async () => {
+    let extensionId = extensionIdInput.value || 'ppdadbejkmjnefldpcdjhnkpbjkikoip';
+    // aeiciliacehpifhikhkgkmohihocgain
+    // blgopabeahlgefobchbgbkekajmbnfmh   ext
+    // fdkfkdobkkgngljecckfaeiabkinnnij     my ext
+
     // todo 1 如何判断已经安装插件
     if (!connection) {
       // alert("请先安装oasis-extension-wallet")
       onboardButton.innerText = 'Onboarding in progress'
-      connection = await oasisExt.connection.connect(extension_url, extPath);
+      connection = await oasisExt.connection.connect("chrome-extension://" + extensionId, extPath);
       if (connection) {
         watchKeys(connection);
 
