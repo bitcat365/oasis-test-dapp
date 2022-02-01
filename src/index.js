@@ -139,7 +139,7 @@ const playground = (async function () {
   // 获取签名者
   // 打包交易
   // 4，签名
-  let extensionId = "fdkfkdobkkgngljecckfaeiabkinnnij"
+  let extensionId = "ppdadbejkmjnefldpcdjhnkpbjkikoip"
   // "aeiciliacehpifhikhkgkmohihocgain"//"fdkfkdobkkgngljecckfaeiabkinnnij"
 
   const extension_url = "chrome-extension://" + extensionId
